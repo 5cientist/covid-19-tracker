@@ -8,12 +8,14 @@ import {
 } from "@material-ui/core";
 import InfoBox from "./InfoBox";
 import Map from "./Map";
+import Table from "./Table";
 import "./App.css";
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
 
   //STATE is how to write a variable in REACT <<<<<<<
   //USEEFFECT which run a pices of code based on given condition
@@ -44,6 +46,7 @@ function App() {
             name: country.country, // united states , India ,...
             value: country.countryInfo.iso2, // Us ,In ,Uk ...
           }));
+          setTableData(data);
           setCountries(countries);
         });
     };
@@ -122,6 +125,7 @@ function App() {
       <Card className="app__right">
         <CardContent>
           <h3>Live causes by the Country</h3>
+          <Table countries={tableData} />
 
           <h3>World wide causes</h3>
         </CardContent>
