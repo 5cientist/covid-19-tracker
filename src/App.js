@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { MenuItem, FormControl, Select } from "@material-ui/core";
-import InfoBox from './InfoBox';
+import InfoBox from "./InfoBox";
+import Map from "./Map";
 import "./App.css";
 
 function App() {
@@ -30,47 +31,52 @@ function App() {
     getCountriesData();
   }, []);
 
-  const onCountryChange = async(event) => {
+  const onCountryChange = async (event) => {
     const countryCode = event.target.value;
-    console.log("yo yo yo ",countryCode);
+    console.log("yo yo yo ", countryCode);
 
     setCountry(countryCode);
   }
 
   return (
     <div className="app">
-      <div className="app__header">
-        {/* <h1>Scientist hanshir lukku <span>🚀</span></h1> */}
-        <h1> COVID-19 TRACKER </h1>
+      <div className="app__left">
+        <div className="app__header">
+          {/* <h1>Scientist hanshir lukku <span>🚀</span></h1> */}
+          <h1> COVID-19 TRACKER </h1>
 
-        {/* i want loops to  countries
+          {/* i want loops to  countries
     and show the drop 
     for that we use state 
 */}
 
-        <FormControl className="app__dropdown">
-          <Select variant="outlined" onChange={onCountryChange} value={country}>
-          <MenuItem value="worldwide">Worldwide</MenuItem>
-            {countries.map((country) => (
-              <MenuItem value={country.value}>{country.name}</MenuItem>
-            ))}
-            {/* <MenuItem value="worldwide">worldwide</MenuItem>
+          <FormControl className="app__dropdown">
+            <Select variant="outlined" onChange={onCountryChange} value={country}>
+              <MenuItem value="worldwide">Worldwide</MenuItem>
+              {countries.map((country) => (
+                <MenuItem value={country.value}>{country.name}</MenuItem>
+              ))}
+              {/* <MenuItem value="worldwide">worldwide</MenuItem>
           <MenuItem value="worldwide">Option two</MenuItem>
           <MenuItem value="worldwide">option 3</MenuItem>
           <MenuItem value="worldwide">yo yo yo</MenuItem> */}
-          </Select>
-        </FormControl>
-      </div>
+            </Select>
+          </FormControl>
+        </div>
 
-      <div className="app__stats">
-        <InfoBox title="Coronavirus Causes" cases={123} total={2000}/>
+        <div className="app__stats">
+          <InfoBox title="Coronavirus Causes" cases={123} total={2000} />
 
-        <InfoBox title="Recoverd" cases={1233} total={3000} />
+          <InfoBox title="Recoverd" cases={1233} total={3000} />
 
-        <InfoBox title="Death"cases={1235} total={4000} />
-        {/* infoBox for recovery
+          <InfoBox title="Death" cases={1235} total={4000} />
+          {/* infoBox for recovery
         infoBox for death
         infoBox for recovery */}
+
+        </div>
+
+        <Map />
 
       </div>
 
