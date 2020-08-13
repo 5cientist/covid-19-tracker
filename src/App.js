@@ -4,6 +4,7 @@ import "./App.css";
 
 function App() {
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState('worldwide');
 
   //STATE is how to write a variable in REACT <<<<<<<
   //USEEFFECT which run a pices of code based on given condition
@@ -26,8 +27,14 @@ function App() {
         });
     };
     getCountriesData();
-
   }, []);
+
+  const onCountryChange = async(event) => {
+    const countryCode = event.target.value;
+    console.log("yo yo yo ",countryCode);
+
+    setCountry(countryCode);
+  }
 
   return (
     <div className="app">
@@ -41,7 +48,8 @@ function App() {
 */}
 
         <FormControl className="app__dropdown">
-          <Select variant="outlined" value="abc">
+          <Select variant="outlined" onChange={onCountryChange} value={country}>
+          <MenuItem value="worldwide">Worldwide</MenuItem>
             {countries.map((country) => (
               <MenuItem value={country.value}>{country.name}</MenuItem>
             ))}
