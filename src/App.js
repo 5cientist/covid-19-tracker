@@ -39,7 +39,7 @@ function App() {
   return (
     <div className="app">
       <div className="app__header">
-        {/* <h1>Scientist <span>🚀</span></h1> */}
+        {/* <h1>Scientist hanshir lukku <span>🚀</span></h1> */}
         <h1> COVID-19 TRACKER </h1>
 
         {/* i want loops to  countries
