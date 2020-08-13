@@ -60,6 +60,14 @@ function App() {
           </Select>
         </FormControl>
       </div>
+
+      <div className="app__stats">
+        {/* infoBox for recovery
+        infoBox for death
+        infoBox for recovery */}
+
+      </div>
+
     </div>
   );
 }
