@@ -1,16 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { MenuItem, FormControl, Select } from "@material-ui/core";
+import {
+  MenuItem,
+  FormControl,
+  Select,
+  Card,
+  CardContent,
+} from "@material-ui/core";
 import InfoBox from "./InfoBox";
 import Map from "./Map";
 import "./App.css";
 
 function App() {
   const [countries, setCountries] = useState([]);
-  const [country, setCountry] = useState('worldwide');
+  const [country, setCountry] = useState("worldwide");
+  const [countryInfo, setCountryInfo] = useState({});
 
   //STATE is how to write a variable in REACT <<<<<<<
   //USEEFFECT which run a pices of code based on given condition
   //https://disease.sh/v3/covid-19/countries // use for api
+
+
+  useEffect(()=>{
+    fetch("https://disease.sh/v3/covid-19/all")
+    .then((response) => response.json())
+    .then((data => {
+      setCountryInfo(data);
+    }))
+
+  },[])
+
+
 
   useEffect(() => {
     // code inside here will run Onces
@@ -36,7 +55,25 @@ function App() {
     console.log("yo yo yo ", countryCode);
 
     setCountry(countryCode);
-  }
+
+    const url =
+      countryCode === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all"
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+        await fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          setCountry(countryCode);
+          // all of the data 
+          //from the country
+          setCountryInfo(data);
+
+        });
+  };
+
+  console.log("country info >>", countryInfo);
+
+ 
 
   return (
     <div className="app">
@@ -51,7 +88,11 @@ function App() {
 */}
 
           <FormControl className="app__dropdown">
-            <Select variant="outlined" onChange={onCountryChange} value={country}>
+            <Select
+              variant="outlined"
+              onChange={onCountryChange}
+              value={country}
+            >
               <MenuItem value="worldwide">Worldwide</MenuItem>
               {countries.map((country) => (
                 <MenuItem value={country.value}>{country.name}</MenuItem>
@@ -65,21 +106,26 @@ function App() {
         </div>
 
         <div className="app__stats">
-          <InfoBox title="Coronavirus Causes" cases={123} total={2000} />
+          <InfoBox title="Coronavirus Causes" cases={countryInfo.todayCases} total={countryInfo.cases} />
 
-          <InfoBox title="Recoverd" cases={1233} total={3000} />
+          <InfoBox title="Recoverd" cases={countryInfo.todayRecovered} total={countryInfo.recovered} />
 
-          <InfoBox title="Death" cases={1235} total={4000} />
+          <InfoBox title="Death" cases={countryInfo.todayDeaths} total={countryInfo.deaths} />
           {/* infoBox for recovery
         infoBox for death
         infoBox for recovery */}
-
         </div>
 
         <Map />
-
       </div>
 
+      <Card className="app__right">
+        <CardContent>
+          <h3>Live causes by the Country</h3>
+
+          <h3>World wide causes</h3>
+        </CardContent>
+      </Card>
     </div>
   );
 }
